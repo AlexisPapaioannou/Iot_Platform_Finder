@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Platform Finder</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #424242;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            background-size: 2%;
+            background-attachment: fixed;
+        }
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+        }
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .logo-container img {
+            width: 150px;
+            height: auto;
+        }
+        .logo-container h1 {
+            margin-top: 10px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e88e5;
+        }
+        form {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        select, button {
+            font-size: 14px;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            border: 1px solid #9e9e9e;
+            width: 100%;
+        }
+        label {
+            font-weight: bold;
+        }
+        .required-star {
+            color: red;
+            margin-left: 5px;
+        }
+        button {
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px #1565c0;
+            transition: all 0.1s ease-in-out;
+        }
+        button:hover {
+            background-color: #1565c0;
+        }
+        button:active {
+            background-color: #1565c0;
+            box-shadow: 0 2px #0d47a1;
+            transform: translateY(2px);
+        }
+        .results {
+            display: flex;
+            flex-direction: column; /* Αλλάζει τη διάταξη σε κάθετα κουτιά */
+            gap: 20px; /* Κενό μεταξύ των κουτιών */
+            margin-top: 20px;
+        }
+
+        .result-box {
+            background-color: #ffffff;
+            border: 1px solid #9e9e9e;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%; /* Κάθε κουτί καταλαμβάνει το 100% της διαθέσιμης περιοχής */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-bottom: 20px; /* Προσθέτει κενό στο κάτω μέρος */
+        }
+
+
+        .more-info-section {
+            display: none;  /* Initially hide the more info sections */
+        }
+        .rate-stars {
+            font-weight: bold;
+            color: gold;
+            font-size: 18px;
+        }
+        .optional-fields {
+            display: none;
+            margin-top: 10px;
+        }
+        .toggle-button {
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            opacity: 0.5;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .toggle-button:hover {
+            background-color: #1565c0;
+            opacity: 0.7;
+        }
+        .toggle-button:active {
+            background-color: #1565c0;
+            transform: translateY(2px);
+            opacity: 0.6;
+        }
+        .reset-button {
+            background-color: #ff5252;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .reset-button:hover {
+            background-color: #e53935;
+        }
+        .reset-button:active {
+            background-color: #d32f2f;
+            transform: translateY(2px);
+        }
+        
+        .website-logo {
+            width: 24px;
+            height: 24px;
+        }
+
+        .github-logo {
+            width: 24px;
+            height: 24px;
+        }
+
+        .website-link, .github-link {
+            display: inline-block; /* Ensure the links behave like blocks to wrap icons */
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/AlexisPapaioannou/Iot_Platform_Finder/main/ChriSmA2_logo_transp.png" alt="ChriSmA2 Logo">
+            <h1>IoT Platform Finder</h1>
+        </div>
+
+        <!-- Search Form -->
+        <form id="search-form">
+            <label for="sector">Sector<span class="required-star">*</span></label>
+            <select id="sector" name="Sector" required>
+                <option value="">Please select...</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="IoT">IoT</option>
+                <option value="Telecommunications">Telecommunications</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Finance">Finance</option>
+                <option value="Smart cities">Smart cities</option>
+                <option value="Industrial IoT">Industrial IoT</option>
+                <option value="Home automation">Home automation</option>
+                <option value="Energy">Energy</option>
+                <option value="Manufacturing">Manufacturing</option>
+                <option value="Automotive">Automotive</option>
+                <option value="Agriculture">Agriculture</option>
+                <option value="Smart energy">Smart energy</option>
+                <option value="Smart industry">Smart industry</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Retail">Retail</option>
+                <option value="Financial services">Financial services</option>
+                <option value="Consumer electronics">Consumer electronics</option>
+                <option value="Smart homes">Smart homes</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Elderly care">Elderly care</option>
+                <option value="Property management">Property management</option>
+                <option value="Smart buildings">Smart buildings</option>
+                <option value="Logistics">Logistics</option>
+                <option value="IT Operations">IT Operations</option>
+                <option value="Smart agriculture">Smart agriculture</option>
+                <option value="Research">Research</option>
+                <option value="Environmental monitoring">Environmental monitoring</option>
+                <option value="Education">Education</option>
+            </select>
+
+            <!-- Optional fields for filtering -->
+            <button type="button" id="toggle-optional-button" class="toggle-button" onclick="toggleOptionalFields()">+ Show Optional Fields</button>
+            <div id="optional-fields" class="optional-fields">
+                
+                <label for="backend_language">Backend Language</label>
+                <select id="backend_language" name="BackendLanguage">
+                    <option value="">Please select...</option>
+                    <option value="Java">Java</option>
+                    <option value="Go">Go</option>
+                    <option value="Python">Python</option>
+                    <option value="C#">C#</option>
+                    <option value="Node.js">Node.js</option>
+                    <option value="C/C++">C/C++</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Scala">Scala</option>
+                    <option value="Groovy">Groovy</option>
+                    <option value="Spring Framework">Spring Framework</option>
+                    <option value="MATLAB">MATLAB</option>
+                    <option value="Ruby on Rails">Ruby on Rails</option>
+                </select>
+
+                <label for="frontend_language">Frontend Language</label>
+                <select id="frontend_language" name="FrontendLanguage">
+                    <option value="">Please select...</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="HTML">HTML</option>
+                    <option value="CSS">CSS</option>
+                    <option value="AngularJS">AngularJS</option>
+                    <option value="Angular">Angular</option>
+                    <option value="TypeScript">TypeScript</option>
+                    <option value="Polymer">Polymer</option>
+                    <option value="Not applicable">Not applicable</option>
+                </select>
+
+                <label for="supported_protocols">Supported Protocols</label>
+                <select id="supported_protocols" name="SupportedProtocols">
+                    <option value="">Please select...</option>
+                    <option value="HTTP">HTTP</option>
+                    <option value="MQTT">MQTT</option>
+                    <option value="HTTPS">HTTPS</option>
+                    <option value="WebSockets">WebSockets</option>
+                    <option value="CoAP">CoAP</option>
+                    <option value="LwM2M">LwM2M</option>
+                    <option value="NGSI-LD">NGSI-LD</option>
+                    <option value="SQL">SQL</option>
+                    <option value="TQL">TQL</option>
+                    <option value="Zigbee">Zigbee</option>
+                    <option value="Z-Wave">Z-Wave</option>
+                    <option value="JDBC">JDBC</option>
+                    <option value="OPC-UA">OPC-UA</option>
+                    <option value="Modbus">Modbus</option>
+                    <option value="SNMP">SNMP</option>
+                    <option value="StatsD">StatsD</option>
+                </select>
+
+                <label for="documentation_lod">Documentation Level of Detail</label>
+                <select id="documentation_lod" name="DocumentationLoD">
+                    <option value="">Please select...</option>
+                    <option value="Basic">Basic</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+
+                <label for="community_activity_level">Community Activity Level</label>
+                <select id="community_activity_level" name="CommunityActivityLevel">
+                    <option value="">Please select...</option>
+                    <option value="Basic">Basic</option>
+                    <option value="High">High</option>
+                    <option value="Excessive">Excessive</option>
+                </select>
+
+                <label for="scalability_challenge">Scalability Challenge</label>
+                <select id="scalability_challenge" name="ScalabilityChallenge">
+                    <option value="">Please select...</option>
+                    <option value="Limited">Limited</option>
+                    <option value="Challenging">Challenging</option>
+                    <option value="High">High</option>
+                    <option value="Complex">Complex</option>
+                </select>
+
+                <label for="configuration_complexity">Configuration Complexity</label>
+                <select id="configuration_complexity" name="ConfigurationComplexity">
+                    <option value="">Please select...</option>
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                    <option value="Extreme">Extreme</option>
+                </select>
+
+                <label for="customization">Customization</label>
+                <select id="customization" name="Customization">
+                    <option value="">Please select...</option>
+                    <option value="Extensive">Extensive</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Basic">Basic</option>
+                    <option value="Poor">Poor</option>
+                </select>
+
+                <label for="cost_for_premium">Cost for Premium</label>
+                <select id="cost_for_premium" name="CostForPremium">
+                    <option value="">Please select...</option>
+                    <option value="Low">Low</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="High">High</option>
+                    <option value="Expensive">Expensive</option>
+                </select>
+
+                <label for="integration">Integration</label>
+                <select id="integration" name="Integration">
+                    <option value="">Please select...</option>
+                    <option value="Simple">Simple</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Complex">Complex</option>
+                </select>
+
+                <button type="button" class="reset-button" onclick="resetOptionalFields()">Reset Optional Fields</button>
+            </div>
+
+            <button type="button" onclick="performSearch()">Search</button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results"></div>
+    </div>
+
+    <!-- Include PapaParse CDN for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <script>
+        let iotPlatforms = [];
+
+        // Function to fetch the CSV file from GitHub (Raw link)
+        function fetchCSVFromGitHub() {
+            const githubRawUrl = 'https://raw.githubusercontent.com/AlexisPapaioannou/Iot_Platform_Finder/main/iot_data_for_webapp.csv';
+
+            fetch(githubRawUrl)
+                .then(response => response.text())
+                .then(csvData => {
+                    // Parse the CSV data using PapaParse
+                    Papa.parse(csvData, {
+                        header: true,  // CSV contains a header row
+                        dynamicTyping: true,  // Automatically typecast numbers
+                        complete: function(results) {
+                            iotPlatforms = results.data;  // Store the parsed data in the global array
+                            console.log("Parsed CSV data:", iotPlatforms);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        }
+
+        // Call the fetch function to load CSV data on page load
+        window.onload = function() {
+            fetchCSVFromGitHub();
+        };
+
+        // Function to toggle the optional fields
+        function toggleOptionalFields() {
+            const optionalFields = document.getElementById('optional-fields');
+            const toggleButton = document.getElementById('toggle-optional-button');
+            if (optionalFields.style.display === 'none' || optionalFields.style.display === '') {
+                optionalFields.style.display = 'block';
+                toggleButton.textContent = '- Hide Optional Fields';
+            } else {
+                optionalFields.style.display = 'none';
+                toggleButton.textContent = '+ Show Optional Fields';
+            }
+        }
+
+        // Function to reset optional fields
+        function resetOptionalFields() {
+            document.getElementById('backend_language').selectedIndex = 0;
+            document.getElementById('frontend_language').selectedIndex = 0;
+            document.getElementById('supported_protocols').selectedIndex = 0;
+            document.getElementById('documentation_lod').selectedIndex = 0;
+            document.getElementById('community_activity_level').selectedIndex = 0;
+            document.getElementById('scalability_challenge').selectedIndex = 0;
+            document.getElementById('configuration_complexity').selectedIndex = 0;
+            document.getElementById('customization').selectedIndex = 0;
+            document.getElementById('cost_for_premium').selectedIndex = 0;
+            document.getElementById('integration').selectedIndex = 0;
+        }
+
+        // Function to perform search based on form input
+        function performSearch() {
+            const sector = document.getElementById('sector').value;
+            const backendLanguage = document.getElementById('backend_language').value;
+            const frontendLanguage = document.getElementById('frontend_language').value;
+            const supportedProtocols = document.getElementById('supported_protocols').value;
+            const documentationLoD = document.getElementById('documentation_lod').value;
+            const communityActivityLevel = document.getElementById('community_activity_level').value;
+            const scalabilityChallenge = document.getElementById('scalability_challenge').value;
+            const configurationComplexity = document.getElementById('configuration_complexity').value;
+            const customization = document.getElementById('customization').value;
+            const costForPremium = document.getElementById('cost_for_premium').value;
+            const integration = document.getElementById('integration').value;
+
+            // Apply filtering logic
+            const filteredPlatforms = iotPlatforms.filter(platform => {
+                const matchesSector = sector === "" || (platform.Sector && platform.Sector.includes(sector));
+                const matchesBackendLanguage = backendLanguage === "" || 
+                    (platform.BackendLanguage && platform.BackendLanguage.split(',').map(lang => lang.trim()).includes(backendLanguage));
+                const matchesFrontendLanguage = frontendLanguage === "" || 
+                    (platform.FrontendLanguage && platform.FrontendLanguage.split(',').map(lang => lang.trim()).includes(frontendLanguage));
+                const matchesSupportedProtocols = supportedProtocols === "" || 
+                    (platform.SupportedProtocols && platform.SupportedProtocols.split(',').map(protocol => protocol.trim()).includes(supportedProtocols));
+                const matchesDocumentationLoD = documentationLoD === "" || platform.DocumentationLoD === documentationLoD;
+                const matchesCommunityActivityLevel = communityActivityLevel === "" || platform.CommunityActivityLevel === communityActivityLevel;
+                const matchesScalabilityChallenge = scalabilityChallenge === "" || platform.ScalabilityChallenge === scalabilityChallenge;
+                const matchesConfigurationComplexity = configurationComplexity === "" || platform.ConfigurationComplexity === configurationComplexity;
+                const matchesCustomization = customization === "" || platform.Customization === customization;
+                const matchesCostForPremium = costForPremium === "" || platform.CostForPremium === costForPremium;
+                const matchesIntegration = integration === "" || platform.Integration === integration;
+
+                return matchesSector && matchesBackendLanguage && matchesFrontendLanguage && matchesSupportedProtocols && matchesDocumentationLoD && matchesCommunityActivityLevel && matchesScalabilityChallenge && matchesConfigurationComplexity && matchesCustomization && matchesCostForPremium && matchesIntegration;
+            });
+
+            // Sort the filtered platforms by the 'Rate' (stars) in descending order
+            filteredPlatforms.sort((a, b) => (b.Rate || 0) - (a.Rate || 0));
+
+            // Display the filtered and sorted results
+            displayResults(filteredPlatforms);
+        }
+
+        // Function to display results
+        function displayResults(platforms) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';  // Καθαρίζει τα προηγούμενα αποτελέσματα
+
+            if (platforms.length === 0) {
+                resultsDiv.innerHTML = "<div>No results found.</div>";
+            } else {
+                platforms.forEach((platform, index) => {
+                    const githubUrl = platform.Git;
+                    const websiteUrl = platform.Website;
+                    const rate = platform.Rate || 0;
+                    const stars = '★'.repeat(rate);  // Δημιουργεί αστέρια για την αξιολόγηση
+                    const resultId = `more-info-${index}`;  // Μοναδικό ID για κάθε αποτέλεσμα
+
+                    // Δημιουργία HTML για κάθε αποτέλεσμα
+                    const platformDiv = document.createElement('div');
+                    platformDiv.className = 'result-box';  // Ορισμός της κλάσης CSS για τα κουτιά των αποτελεσμάτων
+
+                    // Δημιουργία της HTML δομής
+                    platformDiv.innerHTML = `
+                        <div class='rate-stars'>${stars}</div>
+                        <div class='name-and-logo'>
+                            <h3>${platform.Name}</h3>
+                            <p class='description'>${platform.Description || 'No description available'}</p>
+                            <a href="${websiteUrl}" target="_blank" class="website-link">
+                                <img src="https://raw.githubusercontent.com/AlexisPapaioannou/Iot_Platform_Finder/main/website_icon.png" alt="Website Icon" class="website-logo">
+                            </a>
+                            <a href="${githubUrl}" target="_blank" class="github-link">
+                                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="github-logo">
+                            </a>
+                            <button class='more-info-button' onclick='toggleMoreInfo("${resultId}")'>More Information</button>
+                        </div>
+                        <div id='${resultId}' class='more-info-section' style='display: none;'>
+                            <p><strong>Sectors:</strong> ${platform.Sector ? platform.Sector.split(', ').join(', ') : 'N/A'}</p>
+                            <p><strong>Backend Languages:</strong> ${platform.BackendLanguage ? platform.BackendLanguage.split(', ').join(', ') : 'N/A'}</p>
+                            <p><strong>Frontend Languages:</strong> ${platform.FrontendLanguage ? platform.FrontendLanguage.split(', ').join(', ') : 'N/A'}</p>
+                            <p><strong>Supported Protocols:</strong> ${platform.SupportedProtocols ? platform.SupportedProtocols.split(', ').join(', ') : 'N/A'}</p>
+                            <p><strong>Customization:</strong> ${platform.Customization || 'N/A'}</p>
+                            <p><strong>Cost for Premium:</strong> ${platform.CostForPremium || 'N/A'}</p>
+                            <p><strong>Integration:</strong> ${platform.Integration || 'N/A'}</p>
+                            <p><strong>Documentation Level of Detail:</strong> ${platform.DocumentationLoD || 'N/A'}</p>
+                            <p><strong>Community Activity Level:</strong> ${platform.CommunityActivityLevel || 'N/A'}</p>
+                            <p><strong>Scalability Challenge:</strong> ${platform.ScalabilityChallenge || 'N/A'}</p>
+                            <p><strong>Configuration Complexity:</strong> ${platform.ConfigurationComplexity || 'N/A'}</p>
+                        </div>
+                    `;
+
+                    // Προσθέτει το κουτί των αποτελεσμάτων στο div των αποτελεσμάτων
+                    resultsDiv.appendChild(platformDiv);
+                });
+            }
+        }
+
+
+    // Function to toggle the visibility of more information sections
+    function toggleMoreInfo(id) {
+        const section = document.getElementById(id);
+        if (section.style.display === 'block') {
+            section.style.display = 'none';  // Hide section if it's already visible
+        } else {
+            section.style.display = 'block';  // Show section if it's hidden
+        }
+    }
+
+    </script>
+</body>
+</html>
